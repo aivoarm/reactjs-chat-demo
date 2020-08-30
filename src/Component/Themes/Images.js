@@ -5,6 +5,8 @@ const images = {
     ic_photo: require('../../images/ic_photo.png'),
     ic_sticker: require('../../images/ic_sticker.png'),
     ic_send: require('../../images/ic_send.png'),
+    ic_emj: require('../../images/ic_emj.png'),
+
     ic_wave_hand: require('../../images/ic_wave_hand.png'),
 
     mimi1: require('../../images/mimi1.gif'),

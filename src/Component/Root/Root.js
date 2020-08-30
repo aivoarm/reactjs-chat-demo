@@ -36,6 +36,7 @@ class Root extends Component {
                             path="/"
                             render={props => <Login showToast={this.showToast} {...props} />}
                         />
+                       
                         <Route
                             exact
                             path="/main"

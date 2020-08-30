@@ -4,6 +4,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "emoji-mart": "^3.0.0",
     "firebase": "^6.3.3",
     "moment": "^2.22.2",
     "react": "^16.8.6",

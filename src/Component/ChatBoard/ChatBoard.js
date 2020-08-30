@@ -3,9 +3,13 @@ import React, {Component} from 'react'
 import ReactLoading from 'react-loading'
 import 'react-toastify/dist/ReactToastify.css'
 import {myFirestore, myStorage} from '../../Config/MyFirebase'
+import {Mymessaging} from '../../Config/MyFirebase'
+
 import images from '../Themes/Images'
 import './ChatBoard.css'
 import {AppString} from './../Const'
+import 'emoji-mart/css/emoji-mart.css'
+import { Picker } from 'emoji-mart'
 
 export default class ChatBoard extends Component {
     constructor(props) {
@@ -13,6 +17,7 @@ export default class ChatBoard extends Component {
         this.state = {
             isLoading: false,
             isShowSticker: false,
+            isShowEmoji: {display: "none"},
             inputValue: ''
         }
         this.currentUserId = localStorage.getItem(AppString.ID)
@@ -25,14 +30,17 @@ export default class ChatBoard extends Component {
         this.currentPhotoFile = null
     }
 
+   
+
+
     componentDidUpdate() {
         this.scrollToBottom()
     }
-
-    componentDidMount() {
-        // For first render, it's not go through componentWillReceiveProps
+     componentDidMount() {
+  
         this.getListHistory()
-    }
+      }
+    
 
     componentWillUnmount() {
         if (this.removeListener) {
@@ -46,7 +54,18 @@ export default class ChatBoard extends Component {
             this.getListHistory()
         }
     }
+    addEmoji = e => {
+        console.log("em click")
+        let sym = e.unified.split('-')
+        let codesArray = []
+        sym.forEach(el => codesArray.push('0x' + el))
+        let emoji = String.fromCodePoint(...codesArray)
+        this.setState({
+            inputValue: this.state.inputValue + emoji
+        })
+      }
 
+     
     getListHistory = () => {
         if (this.removeListener) {
             this.removeListener()
@@ -85,7 +104,14 @@ export default class ChatBoard extends Component {
     openListSticker = () => {
         this.setState({isShowSticker: !this.state.isShowSticker})
     }
+    renderEmoji = () => { 
+        this.setState({isShowEmoji: {display: "inline"}})
+        if (this.state.isShowEmoji.display== "inline") {
+            this.setState({isShowEmoji: {display: "none "}})
 
+        }
+
+    }
     onSendMessage = (content, type) => {
         if (this.state.isShowSticker && type === 2) {
             this.setState({isShowSticker: false})
@@ -94,6 +120,10 @@ export default class ChatBoard extends Component {
         if (content.trim() === '') {
             return
         }
+         
+        this.setState({isShowEmoji: {display: "none"}})
+
+
 
         const timestamp = moment()
             .valueOf()
@@ -209,7 +239,7 @@ export default class ChatBoard extends Component {
 
                 {/* Stickers */}
                 {this.state.isShowSticker ? this.renderStickers() : null}
-
+                
                 {/* View bottom */}
                 <div className="viewBottom">
                     <img
@@ -234,6 +264,12 @@ export default class ChatBoard extends Component {
                         alt="icon open sticker"
                         onClick={this.openListSticker}
                     />
+                    <img
+                        className="icOpenEmoji"
+                        src={images.ic_emj}
+                        alt="icon open emoji"
+                        onClick={this.renderEmoji}
+                    />
 
                     <input
                         className="viewInput"
@@ -244,6 +280,7 @@ export default class ChatBoard extends Component {
                         }}
                         onKeyPress={this.onKeyboardPress}
                     />
+                  
                     <img
                         className="icSend"
                         src={images.ic_send}
@@ -263,6 +300,11 @@ export default class ChatBoard extends Component {
                         />
                     </div>
                 ) : null}
+
+                    
+<Picker style={this.state.isShowEmoji} onSelect={this.addEmoji}  />
+
+
             </div>
         )
     }

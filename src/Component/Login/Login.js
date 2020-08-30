@@ -99,7 +99,7 @@ class Login extends Component {
     render() {
         return (
             <div className="viewRoot">
-                <div className="header">CHAT DEMO</div>
+                <div className="header">Login to chat</div>
                 <button className="btnLogin" type="submit" onClick={this.onLoginPress}>
                     SIGN IN WITH GOOGLE
                 </button>
