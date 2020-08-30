@@ -1,13 +1,14 @@
 import firebase from 'firebase'
 
 const config = {
-    apiKey: 'AIzaSyAC9ZSyvTxU2o5W0jcL0hDvzS4utLuicE8',
-    authDomain: 'flutterchatdemo.firebaseapp.com',
-    databaseURL: 'https://flutterchatdemo.firebaseio.com',
-    projectId: 'flutterchatdemo',
-    storageBucket: 'flutterchatdemo.appspot.com',
-    messagingSenderId: '347976604232'
-}
+    apiKey: process.env.REACT_APP_API_KEY,
+    authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+    databaseURL: process.env.REACT_APP_DATABASE_URL,
+    projectId: process.env.REACT_APP_PROJECT_ID,
+    storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+    messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+  };
+  
 firebase.initializeApp(config)
 firebase.firestore().settings({
     timestampsInSnapshots: true
